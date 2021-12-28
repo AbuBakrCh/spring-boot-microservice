@@ -13,7 +13,12 @@ public class UserRatingInfo {
     @Autowired
     private RestTemplate restTemplate;
 
-    @HystrixCommand(fallbackMethod = "getFallbackRatingInfo")
+    @HystrixCommand(fallbackMethod = "getFallbackRatingInfo", threadPoolKey = "userRatingPool",
+                    threadPoolProperties = {
+                        @HystrixProperty(name = "coreSize", value = "20"),
+                        @HystrixProperty(name = "maxQueueSize", value = "10")
+                    })
+    //@HystrixCommand(fallbackMethod = "getFallbackRatingInfo")
     public UserRating getUserRating(String userId) {
         UserRating userRating = restTemplate.getForObject("http://rating-data-service/users/ratings/" + userId, UserRating.class);
         return userRating;
