@@ -6,6 +6,13 @@ public class UserCatalog {
     private String userId;
     private List<CatalogInfo> catalogInfoList;
 
+    public UserCatalog(String userId, List<CatalogInfo> catalogInfoList) {
+        this.userId = userId;
+        this.catalogInfoList = catalogInfoList;
+    }
+
+    public UserCatalog() {}
+
     public String getUserId() {
         return userId;
     }
